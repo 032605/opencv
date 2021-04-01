@@ -4,7 +4,7 @@ import json
 import base64
 
 openApiURL = "http://aiopen.etri.re.kr:8000/FaceDeID"
-accessKey = "2ce78d65-5d6b-4f40-ae0a-9c0e1b0112cb"
+accessKey = "key"
 type = "1";     # 얼굴 비식별화 기능 "1"로 설정
 
 image_path = "./src/6.jpg"
