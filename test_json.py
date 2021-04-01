@@ -40,4 +40,5 @@ json_text = '''
 content = json.loads(json_text)
 #email = [ x for x in content['test'][0]
 email = content['test'][0]
+email1 = content['test'][1]
 print(email)

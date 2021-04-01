@@ -1,0 +1,15 @@
+b'{
+    
+    "result":0,
+    "return_object":{
+
+    "faces": [
+        {
+            "conf":0.99,
+            "x":415,
+            "y":401,
+            "width":226,
+            "height":363
+        } ]
+       }
+    }'

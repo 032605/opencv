@@ -7,7 +7,7 @@ openApiURL = "http://aiopen.etri.re.kr:8000/FaceDeID"
 accessKey = "2ce78d65-5d6b-4f40-ae0a-9c0e1b0112cb"
 type = "1";     # 얼굴 비식별화 기능 "1"로 설정
 
-image_path = './src/1.jpg'
+image_path = './src/4.jpg'
 
 file = open(image_path, "rb")
 imageContents = base64.b64encode(file.read()).decode("utf8")
@@ -29,16 +29,33 @@ response = http.request(
 	body=json.dumps(requestJson)
 )
 
+
+
+
+
+
+content = json.loads(response.data)
 # 이미지 읽기
-image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
+img = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
 
-img2 = cv2.rectangle(image, (10,10),(20,20),(255,255,255),2)
+for i in range(0,len(content["return_object"]["faces"])):
+    img_x = int(content["return_object"]["faces"][i]["x"])
+    img_y = int(content["return_object"]["faces"][i]["y"])
+    img_width = int(content["return_object"]["faces"][i]["width"])
+    img_height = int(content["return_object"]["faces"][i]["height"])
+    text = str(img_x) + "," + str(img_y)
 
-cv2.imshow("orignal",image)
-cv2.imshow("rectangle", img2)
+# 구하는 방법
+#cv2.rectangle(src, (x, y), (x + w, y + h), (255, 0, 0), 2)
+cv2.rectangle(img, (img_x,img_y),(img_x+img_width,img_y+img_height),(255,0,0),4)
+cv2.putText(img, text,(img_x,img_y -10),
+cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0))
+
+cropped_img = img[img_y: img_y + img_height: img_x + img_width ]
+
+cv2.imshow("rectangle", img)
 
 cv2.waitKey(0)
-
-print("[responseCode] " + str(response.status))
-print("[responBody]")
+#print("[responseCode] " + str(response.status))
+#print("[responBody]")
 print(response.data)
