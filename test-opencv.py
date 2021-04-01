@@ -7,7 +7,7 @@ openApiURL = "http://aiopen.etri.re.kr:8000/FaceDeID"
 accessKey = "2ce78d65-5d6b-4f40-ae0a-9c0e1b0112cb"
 type = "1";     # 얼굴 비식별화 기능 "1"로 설정
 
-image_path = './src/4.jpg'
+image_path = './src/5.jpg'
 
 file = open(image_path, "rb")
 imageContents = base64.b64encode(file.read()).decode("utf8")
@@ -29,11 +29,6 @@ response = http.request(
 	body=json.dumps(requestJson)
 )
 
-
-
-
-
-
 content = json.loads(response.data)
 # 이미지 읽기
 img = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
@@ -51,7 +46,8 @@ cv2.rectangle(img, (img_x,img_y),(img_x+img_width,img_y+img_height),(255,0,0),4)
 cv2.putText(img, text,(img_x,img_y -10),
 cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0))
 
-cropped_img = img[img_y: img_y + img_height: img_x + img_width ]
+cropped_img = img[img_y: img_y + img_height, img_x : img_x + img_width ]
+cv2.imwrite('./cropped_img.jpg',cropped_img)
 
 cv2.imshow("rectangle", img)
 
